@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
+/* ─── Design Tokens ──────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand palette */
+  --bg-base:        #0B0F19;
+  --bg-surface:     #111827;
+  --bg-elevated:    #1a2236;
+
+  /* Accent colors */
+  --lime:           #C6FF00;
+  --lime-dark:      #a8d600;
+  --cyan:           #00E5FF;
+  --cyan-dark:      #00b8cc;
+  --neon-magenta:   #FF00E5;
+
+  /* Admin colors */
+  --admin-sidebar:  #0F172A;
+  --admin-blue:     #2563EB;
+
+  /* Typography */
+  --font-heading:   var(--font-sora);
+  --font-body:      var(--font-inter);
 }
 
+/* ─── Base ───────────────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-lime:     var(--lime);
+  --color-cyan:     var(--cyan);
+  --font-sans:      var(--font-body);
+  --font-heading:   var(--font-heading);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-base);
+  color: #ffffff;
+  font-family: var(--font-body), sans-serif;
 }
+
+/* ─── Reusable Utility Classes ───────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.text-gradient-lime {
+  background-image: linear-gradient(to right, var(--lime), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-cyan {
+  background-image: linear-gradient(to right, var(--cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-lime {
+  box-shadow: 0 0 30px rgba(198, 255, 0, 0.15);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+}
+
+/* ─── Card Lift ──────────────────────────────────────────────── */
+.card-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg-base); }
+::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+/* ─── Focus ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ─── Admin overrides ────────────────────────────────────────── */
+.admin-sidebar {
+  background: var(--admin-sidebar);
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
